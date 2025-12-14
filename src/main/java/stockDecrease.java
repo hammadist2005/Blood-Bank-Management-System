@@ -20,8 +20,17 @@ public class stockDecrease extends javax.swing.JFrame {
      */
     public stockDecrease() {
         initComponents();
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(890, 530); 
-        setLocationRelativeTo(null);
+// Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -46,9 +55,9 @@ public class stockDecrease extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(340, 130));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -126,10 +135,6 @@ public class stockDecrease extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(771, 490, 89, 27);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(0, 0, 890, 530);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -158,26 +163,44 @@ public class stockDecrease extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String bloodGroup = (String)jComboBox1.getSelectedItem();
-    String unit = jTextField1.getText();
-    int unit1 = Integer.parseInt(unit);
+        // 1. Get user input
+String bloodGroup = (String)jComboBox1.getSelectedItem();
+String unitsStr = jTextField1.getText();
+
+// Check if input is empty to avoid errors
+if (unitsStr.equals("")) {
+    JOptionPane.showMessageDialog(null, "Please enter units!");
+    return;
+}
+
+int unitsToDecrease = Integer.parseInt(unitsStr);
+
+try {
+    Connection con = ConnectionProvider.getCon();
+    Statement st = con.createStatement();
     
-    try {
-        Connection con = ConnectionProvider.getCon();
-        Statement st = con.createStatement();
+    // 2. Fetch current stock level from database
+    ResultSet rs = st.executeQuery("select units from stock where bloodGroup='" + bloodGroup + "'");
+    
+    if (rs.next()) {
+        int currentStock = rs.getInt(1);
         
-        // --- THIS IS THE KEY CHANGE: Minus (-) instead of Plus (+) ---
-        st.executeUpdate("update stock set units=units-'"+unit1+"' where bloodGroup='"+bloodGroup+"'");
-        
-        JOptionPane.showMessageDialog(null, "Successfully Updated");
-        
-        // Refresh page
-        setVisible(false);
-        new stockDecrease().setVisible(true);
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
+        // 3. Safety Check: Don't allow negative numbers
+        if (unitsToDecrease > currentStock) {
+            JOptionPane.showMessageDialog(null, "Not enough stock! Current " + bloodGroup + " is only: " + currentStock);
+        } else {
+            // 4. If safe, execute the update
+            st.executeUpdate("update stock set units=units-" + unitsToDecrease + " where bloodGroup='" + bloodGroup + "'");
+            JOptionPane.showMessageDialog(null, "Successfully Updated");
+            
+            // 5. LIVE UPDATE TRIGGER: Close this window
+            // This forces the home dashboard and stock details to refresh colors and counts
+            setVisible(false); 
+        }
     }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -227,7 +250,6 @@ public class stockDecrease extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

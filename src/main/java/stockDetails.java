@@ -20,8 +20,22 @@ public class stockDetails extends javax.swing.JFrame {
      */
     public stockDetails() {
         initComponents();
+        StockColorRenderer renderer = new StockColorRenderer();
+    // This applies the colors to the first column (Blood Group)
+    jTable1.getColumnModel().getColumn(0).setCellRenderer(renderer);
+    // This applies the colors to the second column (Units)
+    jTable1.getColumnModel().getColumn(1).setCellRenderer(renderer);
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(700, 508); 
-        setLocationRelativeTo(null);
+// Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -40,14 +54,19 @@ public class stockDetails extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(340, 130));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
         getContentPane().setLayout(null);
@@ -91,10 +110,6 @@ public class stockDetails extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(593, 430, 89, 27);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 700, 510);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -130,6 +145,11 @@ public class stockDetails extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        formComponentShown(null);
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -159,10 +179,46 @@ public class stockDetails extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+// This is the "Painter" class that decides the colors
+class StockColorRenderer extends javax.swing.table.DefaultTableCellRenderer {
+    @Override
+    public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        
+        try {
+            // It looks at column 1 (Units) for the current row
+            Object unitValue = table.getValueAt(row, 1);
+            if (unitValue != null) {
+                int units = Integer.parseInt(unitValue.toString());
+                
+                // Logic: Red for <= 50, Yellow for 51-100, Green for > 100
+                if (units <= 50) {
+                    c.setBackground(new java.awt.Color(255, 204, 204)); // Light Red
+                } else if (units <= 100) {
+                    c.setBackground(new java.awt.Color(255, 255, 204)); // Light Yellow
+                } else {
+                    c.setBackground(new java.awt.Color(204, 255, 204)); // Light Green
+                }
+            }
+        } catch (Exception e) {
+            c.setBackground(java.awt.Color.WHITE); // Default to white if there's an error
+        }
+        
+        // Keeps the text black so it's readable
+        c.setForeground(java.awt.Color.BLACK);
+        
+        // If you click a row, keep the standard blue selection color
+        if (isSelected) {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
+        }
+        
+        return c;
+    }
+}
 }

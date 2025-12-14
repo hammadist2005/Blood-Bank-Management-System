@@ -16,6 +16,16 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        java.net.URL logoUrl = getClass().getResource("/BloodBank.png");
+        
+        if (logoUrl != null) {
+            // 2. If found, set it to the label we made in Design view
+            lblLogo.setIcon(new javax.swing.ImageIcon(logoUrl));
+        } else {
+            // 3. If not found, print error but DO NOT CRASH
+            System.err.println("Logo not found! Check src/main/resources folder.");
+            lblLogo.setText("Logo Missing");
+        }
         setSize(1366, 768); // Set a fixed size (width, height)
         setLocationRelativeTo(null); // Center the window on your screen
     }
@@ -35,6 +45,8 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        lblLogo = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,38 +58,49 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Username");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(460, 300, 90, 17);
+        jLabel1.setBounds(450, 360, 90, 20);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 0, 51));
         jLabel2.setText("Password");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(460, 350, 90, 17);
+        jLabel2.setBounds(450, 407, 100, 30);
 
         jTextField1.setBackground(new java.awt.Color(255, 204, 204));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(570, 300, 283, 23);
+        jTextField1.setBounds(570, 360, 283, 23);
 
         jPasswordField1.setBackground(new java.awt.Color(255, 204, 204));
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(570, 350, 283, 23);
+        jPasswordField1.setBounds(570, 410, 283, 23);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Documents\\NetBeansProjects\\Blood_Bank_Management_System\\src\\main\\java\\login.png")); // NOI18N
         jButton1.setText("Login");
         jButton1.addActionListener(this::jButton1ActionPerformed);
         getContentPane().add(jButton1);
-        jButton1.setBounds(570, 400, 92, 27);
+        jButton1.setBounds(570, 460, 92, 27);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exit application.png"))); // NOI18N
         jButton2.setText("Close");
         jButton2.addActionListener(this::jButton2ActionPerformed);
         getContentPane().add(jButton2);
-        jButton2.setBounds(760, 400, 91, 27);
+        jButton2.setBounds(760, 460, 91, 27);
+
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BloodBank.png"))); // NOI18N
+        getContentPane().add(lblLogo);
+        lblLogo.setBounds(430, 80, 370, 230);
+
+        jCheckBox1.setContentAreaFilled(false);
+        jCheckBox1.setFocusPainted(false);
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eye.png"))); // NOI18N
+        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
+        getContentPane().add(jCheckBox1);
+        jCheckBox1.setBounds(860, 399, 40, 40);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LOGIN BG.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
@@ -111,6 +134,18 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+if (jCheckBox1.isSelected()) {
+        // Show password
+        jPasswordField1.setEchoChar((char)0);
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hiddeneye.png")));
+    } else {
+        // Hide password
+        jPasswordField1.setEchoChar('*');
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eye.png")));
+    }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -139,10 +174,12 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblLogo;
     // End of variables declaration//GEN-END:variables
 }

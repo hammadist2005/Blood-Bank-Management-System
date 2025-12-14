@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 import javax.swing.JOptionPane;
+import java.sql.*;
+import Project.ConnectionProvider;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -16,8 +19,28 @@ public class home extends javax.swing.JFrame {
      */
     public home() {
         initComponents();
+        // Style the Popup to look like a clean white box
+// Styling the Exit Popup Box
+popupExit.setPreferredSize(new java.awt.Dimension(200, 100)); // Square size
+popupExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 0, 0), 2)); // Red Border
+popupExit.setBackground(java.awt.Color.WHITE);
+popupDelete.setPreferredSize(new java.awt.Dimension(200, 80)); // Smaller height since it only has one item
+popupDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 0, 0), 2)); // Red Border
+popupDelete.setBackground(java.awt.Color.WHITE);
+popupStock.setPreferredSize(new java.awt.Dimension(200, 150)); // Square size
+popupStock.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 0, 0), 2)); // Red Border
+popupStock.setBackground(java.awt.Color.WHITE);
+popupSearch.setPreferredSize(new java.awt.Dimension(200, 100)); // Square-ish size
+popupSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 0, 0), 2)); // Red Border
+popupSearch.setBackground(java.awt.Color.WHITE);
+popupDonor.setPreferredSize(new java.awt.Dimension(180, 100)); // Width: 180, Height: 100
+popupDonor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 0, 0), 2)); // Red Border
+popupDonor.setBackground(java.awt.Color.WHITE);
         setSize(1366, 768); // Matches your background image size
         setLocationRelativeTo(null);
+        loadData();
+        setLabelOpacity(jLabel6, 0.2f);
+        setLabelOpacity(jLabel8, 0.1f);
     }
 
     /**
@@ -29,197 +52,475 @@ public class home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        popupDonor = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        popupSearch = new javax.swing.JPopupMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        popupStock = new javax.swing.JPopupMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        popupDelete = new javax.swing.JPopupMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        popupExit = new javax.swing.JPopupMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lblBloodUnits = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lblTotalCities = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        lblTotalDonors = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        jButton5 = new javax.swing.JButton();
+        jSeparator8 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        getContentPane().setLayout(null);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/home.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1407, 768);
-
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Donor.png"))); // NOI18N
-        jMenu1.setText("Donor");
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Add new.png"))); // NOI18N
         jMenuItem1.setText("Add New");
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMenu1.add(jMenuItem1);
-        jMenu1.add(jSeparator1);
+        popupDonor.add(jMenuItem1);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Update details.png"))); // NOI18N
         jMenuItem2.setText("Update Details");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
-        jMenu1.add(jMenuItem2);
+        popupDonor.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Details.png"))); // NOI18N
         jMenuItem3.setText("All Donor Details");
         jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
-        jMenu1.add(jMenuItem3);
+        popupDonor.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search user.png"))); // NOI18N
-        jMenu2.setText("Search Blood Donor");
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Location.png"))); // NOI18N
         jMenuItem4.setText("Location");
         jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
-        jMenu2.add(jMenuItem4);
-        jMenu2.add(jSeparator2);
+        popupSearch.add(jMenuItem4);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Blood group.png"))); // NOI18N
         jMenuItem5.setText("Blood Group");
         jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
-        jMenu2.add(jMenuItem5);
+        popupSearch.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stock.png"))); // NOI18N
-        jMenu3.setText("Stock");
-
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Inc.png"))); // NOI18N
         jMenuItem6.setText("Increase");
         jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
-        jMenu3.add(jMenuItem6);
-        jMenu3.add(jSeparator3);
+        popupStock.add(jMenuItem6);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Dec.png"))); // NOI18N
         jMenuItem7.setText("Decrease");
         jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
-        jMenu3.add(jMenuItem7);
+        popupStock.add(jMenuItem7);
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Details.png"))); // NOI18N
-        jMenuItem8.setText("Details");
+        jMenuItem8.setText("Stock Details");
         jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
-        jMenu3.add(jMenuItem8);
+        popupStock.add(jMenuItem8);
 
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/delete donor.png"))); // NOI18N
-        jMenu4.setText("Delete Donor");
-
-        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/delete.png"))); // NOI18N
         jMenuItem9.setText("Delete Donor");
         jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
-        jMenu4.add(jMenuItem9);
+        popupDelete.add(jMenuItem9);
 
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exit.png"))); // NOI18N
-        jMenu5.setText("Exit");
-
-        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logout.png"))); // NOI18N
         jMenuItem10.setText("Logout");
         jMenuItem10.addActionListener(this::jMenuItem10ActionPerformed);
-        jMenu5.add(jMenuItem10);
+        popupExit.add(jMenuItem10);
 
-        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exit application.png"))); // NOI18N
         jMenuItem11.setText("Exit Application");
         jMenuItem11.addActionListener(this::jMenuItem11ActionPerformed);
-        jMenu5.add(jMenuItem11);
+        popupExit.add(jMenuItem11);
 
-        jMenuBar1.add(jMenu5);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(245, 245, 250));
+        setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        setJMenuBar(jMenuBar1);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(255, 0, 0)));
+        jPanel2.setPreferredSize(new java.awt.Dimension(260, 140));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Units Collected");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 20));
+
+        lblBloodUnits.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblBloodUnits.setForeground(new java.awt.Color(255, 0, 0));
+        lblBloodUnits.setText("jLabel6");
+        jPanel2.add(lblBloodUnits, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 200, 260, 140));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(255, 0, 0)));
+        jPanel3.setPreferredSize(new java.awt.Dimension(260, 140));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Unlocked Cities");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 200, 20));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(255, 0, 0)));
+        jPanel4.setPreferredSize(new java.awt.Dimension(260, 140));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setText("Total Donors");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 20));
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 260, 140));
+
+        lblTotalCities.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTotalCities.setForeground(new java.awt.Color(255, 0, 0));
+        lblTotalCities.setText("jLabel6");
+        jPanel3.add(lblTotalCities, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 260, 140));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(255, 0, 0)));
+        jPanel5.setPreferredSize(new java.awt.Dimension(260, 140));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setText("Live Donor Count");
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 230, 20));
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(255, 0, 0)));
+        jPanel6.setPreferredSize(new java.awt.Dimension(260, 140));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Total Donors");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 20));
+
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 260, 140));
+
+        lblTotalDonors.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTotalDonors.setForeground(new java.awt.Color(255, 0, 0));
+        lblTotalDonors.setText("jLabel6");
+        jPanel5.add(lblTotalDonors, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 260, 140));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bloodnetwork.png"))); // NOI18N
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 590, 360));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BloodBank.png"))); // NOI18N
+        jLabel6.setOpaque(true);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, -50, 490, 530));
+
+        jPanel7.setBackground(new java.awt.Color(150, 0, 0));
+        jPanel7.setForeground(new java.awt.Color(150, 0, 0));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Donor.png"))); // NOI18N
+        jButton6.setText("Donor");
+        jButton6.setBorderPainted(false);
+        jButton6.setContentAreaFilled(false);
+        jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton6MouseExited(evt);
+            }
+        });
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 280, 60));
+
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search user.png"))); // NOI18N
+        jButton7.setText("Search Donor");
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
+        jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton7MouseExited(evt);
+            }
+        });
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+        jPanel7.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 280, 60));
+
+        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stock.png"))); // NOI18N
+        jButton8.setText("Stock");
+        jButton8.setBorderPainted(false);
+        jButton8.setContentAreaFilled(false);
+        jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
+        jButton8.addActionListener(this::jButton8ActionPerformed);
+        jPanel7.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 280, 60));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bdrop.png"))); // NOI18N
+        jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 50, 60));
+        jPanel7.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 280, 30));
+        jPanel7.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 280, 10));
+        jPanel7.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 280, 10));
+        jPanel7.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 280, 10));
+
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exit.png"))); // NOI18N
+        jButton5.setText("Exit");
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton5MouseExited(evt);
+            }
+        });
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+        jPanel7.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 280, 70));
+        jPanel7.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 280, 20));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Dashboard");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/delete donor.png"))); // NOI18N
+        jButton4.setText("Delete Donor");
+        jButton4.setBorderPainted(false);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton4MouseExited(evt);
+            }
+        });
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jPanel7.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 280, 70));
+        jPanel7.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 280, 10));
+
+        getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 768));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        new allDonorDetails().setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+// Shows the exit options box at the right edge of jButton5
+popupExit.show(jButton5, jButton5.getWidth(), 0);        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
+    if(a == 0) {
+        System.exit(0);
+    }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        new stockIncrease().setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+// Shows the delete option box at the right edge of the button
+popupDelete.show(jButton4, jButton4.getWidth(), 0);        // TODO add your handling code here:
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        new stockDetails().setVisible(true);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-        int a=JOptionPane.showConfirmDialog(null,"Do you really want to logout","Select",JOptionPane.YES_NO_OPTION);
-        if (a==0){
-            setVisible(false);
-            new Login().setVisible(true);
-        }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+// Shows the popup box at the exact Right Edge of the button
+popupDonor.show(jButton6, jButton6.getWidth(), 0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
-           int a=JOptionPane.showConfirmDialog(null,"Do you really want to Close Application","Select",JOptionPane.YES_NO_OPTION);
-        if (a==0){
-            System.exit(0);
-        }    
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+// Shows the search options box at the right edge of the button
+popupSearch.show(jButton7, jButton7.getWidth(), 0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+// Shows the stock options box at the right edge of jButton8
+popupStock.show(jButton8, jButton8.getWidth(), 0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+jButton4.setBackground(new java.awt.Color(180, 0, 0));
+jButton4.setContentAreaFilled(true);
+jButton4.setBorderPainted(true);
+jButton4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, java.awt.Color.WHITE));        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4MouseEntered
+
+    private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
+jButton4.setBackground(new java.awt.Color(150, 0, 0));
+jButton4.setContentAreaFilled(true);
+jButton4.setBorderPainted(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4MouseExited
+
+    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+jButton5.setBackground(new java.awt.Color(180, 0, 0));
+jButton5.setContentAreaFilled(true);
+jButton5.setBorderPainted(true);
+jButton5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, java.awt.Color.WHITE));        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5MouseEntered
+
+    private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
+jButton5.setBackground(new java.awt.Color(150, 0, 0));
+jButton5.setContentAreaFilled(true);
+jButton5.setBorderPainted(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5MouseExited
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        new addNewDonor().setVisible(true);
+new addNewDonor().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        new updateDetailsDonor().setVisible(true); // CORRECT NAME
+new updateDetailsDonor().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+new allDonorDetails().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+// Light up the button and show the white "selection" bar on the left
+jButton6.setBackground(new java.awt.Color(180, 0, 0)); // Lighter Red
+jButton6.setContentAreaFilled(true);
+jButton6.setBorderPainted(true);
+jButton6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, java.awt.Color.WHITE));        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
+// Return to the original Sidebar Dark Red and hide the selection bar
+jButton6.setBackground(new java.awt.Color(150, 0, 0)); // Your Sidebar Red
+jButton6.setContentAreaFilled(true);
+jButton6.setBorderPainted(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6MouseExited
+
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+// Light up the button and show the white "selection" bar on the left
+jButton8.setBackground(new java.awt.Color(180, 0, 0)); // Lighter Red
+jButton8.setContentAreaFilled(true);
+jButton8.setBorderPainted(true);
+jButton8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, java.awt.Color.WHITE));        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8MouseEntered
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+// Return to the original Sidebar Dark Red and hide the selection bar
+jButton8.setBackground(new java.awt.Color(150, 0, 0)); // Your Sidebar Red
+jButton8.setContentAreaFilled(true);
+jButton8.setBorderPainted(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+// Light up the button and show the white "selection" bar on the left
+jButton7.setBackground(new java.awt.Color(180, 0, 0)); // Lighter Red
+jButton7.setContentAreaFilled(true);
+jButton7.setBorderPainted(true);
+jButton7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, java.awt.Color.WHITE));        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
+// Return to the original Sidebar Dark Red and hide the selection bar
+jButton7.setBackground(new java.awt.Color(150, 0, 0)); // Your Sidebar Red
+jButton7.setContentAreaFilled(true);
+jButton7.setBorderPainted(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseExited
+
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        new searchBloodDonorLocation().setVisible(true);
+new searchBloodDonorLocation().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        new searchBloodDonorBloodGroup().setVisible(true);
+new searchBloodDonorBloodGroup().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+new stockIncrease().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        new stockDecrease().setVisible(true);
+new stockDecrease().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+new stockDetails().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        new deleteDonor().setVisible(true);
+new deleteDonor().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
+if(a == 0) {
+    System.exit(0);
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+int a = JOptionPane.showConfirmDialog(null, "Do you really want to Logout?", "Select", JOptionPane.YES_NO_OPTION);
+if(a == 0) {
+    setVisible(false);
+    new Login().setVisible(true); // Matches your Login.java file
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        loadData();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -247,13 +548,20 @@ public class home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -265,9 +573,74 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel lblBloodUnits;
+    private javax.swing.JLabel lblTotalCities;
+    private javax.swing.JLabel lblTotalDonors;
+    private javax.swing.JPopupMenu popupDelete;
+    private javax.swing.JPopupMenu popupDonor;
+    private javax.swing.JPopupMenu popupExit;
+    private javax.swing.JPopupMenu popupSearch;
+    private javax.swing.JPopupMenu popupStock;
     // End of variables declaration//GEN-END:variables
-
+// Paste this whole block at the bottom, before the last '}'
+    public void loadData() {
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            
+            // 1. Get Total Donors
+            ResultSet rs1 = st.executeQuery("SELECT count(*) FROM donor");
+            if(rs1.next()) {
+                lblTotalDonors.setText(rs1.getString(1));
+            }
+            
+            // 2. Get Count of Cities
+            ResultSet rs2 = st.executeQuery("SELECT count(distinct city) FROM donor");
+            if(rs2.next()) {
+                lblTotalCities.setText(rs2.getString(1));
+            }
+            
+            // 3. Get Total Blood Units
+            ResultSet rs3 = st.executeQuery("SELECT sum(units) FROM stock");
+            if(rs3.next()) {
+                String total = rs3.getString(1);
+                if(total == null) {
+                    lblBloodUnits.setText("0");
+                } else {
+                    lblBloodUnits.setText(total);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    public void setLabelOpacity(javax.swing.JLabel label, float opacity) {
+    javax.swing.Icon icon = label.getIcon();
+    if (icon instanceof javax.swing.ImageIcon) {
+        java.awt.Image image = ((javax.swing.ImageIcon) icon).getImage();
+        java.awt.image.BufferedImage bufferedImage = new java.awt.image.BufferedImage(
+            image.getWidth(null), 
+            image.getHeight(null), 
+            java.awt.image.BufferedImage.TYPE_INT_ARGB
+        );
+        java.awt.Graphics2D g2d = bufferedImage.createGraphics();
+        g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER, opacity));
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+        label.setIcon(new javax.swing.ImageIcon(bufferedImage));
+    }
+}
+    
 }

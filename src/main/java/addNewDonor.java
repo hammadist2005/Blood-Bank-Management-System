@@ -19,8 +19,17 @@ public class addNewDonor extends javax.swing.JFrame {
      */
     public addNewDonor() {
         initComponents();
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(730, 520); // Matches your background image size
-        setLocationRelativeTo(null);
+        // Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -61,9 +70,9 @@ public class addNewDonor extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -215,40 +224,31 @@ public class addNewDonor extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(512, 445, 89, 27);
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        jLabel15.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                jLabel15ComponentShown(evt);
-            }
-        });
-        getContentPane().add(jLabel15);
-        jLabel15.setBounds(0, 0, 730, 520);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         try {
-            Connection con = ConnectionProvider.getCon();
-            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
-            // Select the last ID used
-            ResultSet rs = st.executeQuery("select max(donorId) from donor");
-            
-            if(rs.next()) {
-                int id = rs.getInt(1);
-                id = id + 1; // Increment by 1
-                String str = String.valueOf(id);
-                jLabel3.setText(str);
-            } else {
-                jLabel3.setText("1");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        Connection con = ConnectionProvider.getCon();
+    // Use a standard Statement to count the donors
+    Statement st = con.createStatement();
+    
+    // CHANGE: Use count(donorId) instead of max(donorId)
+    ResultSet rs = st.executeQuery("select count(donorId) from donor");
+    
+    if(rs.next()) {
+        int count = rs.getInt(1);
+        int newId = count + 1; // The next available ID based on total count
+        String str = String.valueOf(newId);
+        jLabel3.setText(str);
+    } else {
+        jLabel3.setText("1");
+    }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, e);
     }//GEN-LAST:event_formComponentShown
-
+    }
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -303,7 +303,7 @@ public class addNewDonor extends javax.swing.JFrame {
             // Insert data into database
             st.executeUpdate("insert into donor values(null,'"+name+"','"+fatherName+"','"+motherName+"','"+DOB+"','"+MobileNo+"','"+gender+"','"+email+"','"+bloodGroup+"','"+city+"','"+address+"')");
             
-            JOptionPane.showMessageDialog(null, "Successfully Updated");
+            JOptionPane.showMessageDialog(null, "Successfully Saved");
             
             // Refresh the form
             setVisible(false);
@@ -314,31 +314,6 @@ public class addNewDonor extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jLabel15ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel15ComponentShown
-        // TODO add your handling code here:                                  
-        try {
-            Connection con = ConnectionProvider.getCon();
-            
-            // Create a statement that lets us scroll through data
-            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
-            // Ask: "What is the highest donorId in the table right now?"
-            ResultSet rs = st.executeQuery("select max(donorId) from donor");
-            
-            if(rs.next()) {
-                int id = rs.getInt(1); // e.g. gets "1"
-                id = id + 1;           // 1 + 1 = 2
-                String str = String.valueOf(id);
-                jLabel3.setText(str);  // Sets the label to "2"
-            } else {
-                jLabel3.setText("1");  // If database is empty, start at 1
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    
-    }//GEN-LAST:event_jLabel15ComponentShown
 
     /**
      * @param args the command line arguments
@@ -376,7 +351,6 @@ public class addNewDonor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

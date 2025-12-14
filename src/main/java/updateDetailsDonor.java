@@ -19,8 +19,17 @@ public class updateDetailsDonor extends javax.swing.JFrame {
      */
     public updateDetailsDonor() {
         initComponents();
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(730, 520);
-        setLocationRelativeTo(null);
+// Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -63,9 +72,9 @@ public class updateDetailsDonor extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(340, 130));
         setUndecorated(true);
         getContentPane().setLayout(null);
@@ -216,11 +225,6 @@ public class updateDetailsDonor extends javax.swing.JFrame {
         getContentPane().add(jButton4);
         jButton4.setBounds(503, 437, 80, 27);
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        jLabel13.setText("jLabel13");
-        getContentPane().add(jLabel13);
-        jLabel13.setBounds(0, 0, 700, 500);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -355,7 +359,6 @@ public class updateDetailsDonor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

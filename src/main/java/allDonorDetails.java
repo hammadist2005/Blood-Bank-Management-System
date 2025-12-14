@@ -20,8 +20,17 @@ public class allDonorDetails extends javax.swing.JFrame {
      */
     public allDonorDetails() {
         initComponents();
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(885, 500);
-        setLocationRelativeTo(null);
+// Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -40,9 +49,9 @@ public class allDonorDetails extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(340, 130));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -91,15 +100,6 @@ public class allDonorDetails extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(760, 460, 90, 27);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        jLabel2.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                jLabel2ComponentShown(evt);
-            }
-        });
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 890, 510);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -147,11 +147,6 @@ public class allDonorDetails extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jLabel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel2ComponentShown
-        // TODO add your handling code here:
- 
-    }//GEN-LAST:event_jLabel2ComponentShown
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
@@ -186,7 +181,6 @@ public class allDonorDetails extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

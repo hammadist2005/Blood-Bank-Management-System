@@ -20,8 +20,17 @@ public class stockIncrease extends javax.swing.JFrame {
      */
     public stockIncrease() {
         initComponents();
+        // 1. Setup the Red Border (Outer)
+javax.swing.border.Border outerBorder = javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(150, 0, 0));
+
+// 2. Setup the White Border (Inner)
+javax.swing.border.Border innerBorder = javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255));
+
+// 3. Combine them and apply to the window
+this.getRootPane().setBorder(javax.swing.BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setSize(890, 520); 
-        setLocationRelativeTo(null);
+// Positions the form to the right of the sidebar (X=320, Y=90)
+setLocation(320, 90);
     }
 
     /**
@@ -46,9 +55,9 @@ public class stockIncrease extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocation(new java.awt.Point(340, 130));
         setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -125,10 +134,6 @@ public class stockIncrease extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(761, 486, 89, 27);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/form bg.png"))); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(0, 0, 890, 520);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -173,6 +178,7 @@ public class stockIncrease extends javax.swing.JFrame {
         st.executeUpdate("update stock set units=units+'"+unit1+"' where bloodGroup='"+bloodGroup+"'");
         
         JOptionPane.showMessageDialog(null, "Successfully Updated");
+        this.dispose();
         
         // Refresh the page
         setVisible(false);
@@ -226,7 +232,6 @@ public class stockIncrease extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
